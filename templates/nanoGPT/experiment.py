@@ -1,16 +1,17 @@
-import os
-import time
-import math
-import pickle
+import argparse
 import inspect
 import json
+import math
+import os
+import pickle
+import time
 from contextlib import nullcontext
 from dataclasses import dataclass
+
 import numpy as np
 import torch
 import torch.nn as nn
 from torch.nn import functional as F
-import argparse
 
 
 # --- BEGIN model.py ---
