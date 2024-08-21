@@ -1,0 +1,65 @@
+[
+    {
+        "Name": "human_aware_time_estimation",
+        "Title": "Human-Aware Robot Task Planning with Robot Execution Time Estimation",
+        "Experiment": "Develop a task planning framework that integrates online robot execution time estimation to enhance the efficiency of collaborative tasks between humans and robots. The experiment should compare the performance of the proposed direct and analytical time estimation methods in various simulated collaborative environments. Key metrics would include task completion time and estimation accuracy. The results should highlight the impact of real-time time estimation on optimizing task planning and reducing human-robot task completion time.",
+        "Interestingness": 8,
+        "Feasibility": 7,
+        "Novelty": 7,
+        "novel": true
+    },
+    {
+        "Name": "progprompt_robot_planning",
+        "Title": "PROGPROMPT: Generating Situated Robot Task Plans using Large Language Models",
+        "Experiment": "Implement a system using the PROGPROMPT framework to generate task plans for a robot. This involves using a large language model (LLM) prompted with programming language structures to generate executable plans that incorporate environment feedback and available actions. The experiment would involve comparing task success rates across different environments and possibly extending the framework to support more complex tasks or different types of robots.",
+        "Interestingness": 8,
+        "Feasibility": 7,
+        "Novelty": 7,
+        "novel": false
+    },
+    {
+        "Name": "conformal_tl_planning",
+        "Title": "Conformal Temporal Logic Planning using Large Language Models",
+        "Experiment": "Implement a system using the HERACLEs framework for conformal temporal logic planning. This involves combining symbolic planners with large language models (LLMs) for generating plans that satisfy Linear Temporal Logic (LTL) tasks expressed with natural language (NL) predicates. The experiment would include comparing mission success rates and robustness across different environments, particularly focusing on scenarios with varying levels of task complexity. The incorporation of conformal prediction for managing LLM uncertainty would be a key aspect to evaluate.",
+        "Interestingness": 7,
+        "Feasibility": 6,
+        "Novelty": 7,
+        "novel": false
+    },
+    {
+        "Name": "cook2ltl_recipe_translation",
+        "Title": "Cook2LTL: Translating Cooking Recipes to LTL Formulae using Large Language Models",
+        "Experiment": "Develop and evaluate the Cook2LTL system that translates cooking recipes into Linear Temporal Logic (LTL) formulae. This involves testing the system on various cooking recipes, comparing the efficiency and accuracy of the generated LTL plans against a baseline that does not use cached policies. The experiment should focus on how well the system reduces high-level cooking instructions to robot-executable actions, the impact of caching on performance, and the practical applicability in simulated kitchen environments.",
+        "Interestingness": 7,
+        "Feasibility": 6,
+        "Novelty": 7,
+        "novel": false
+    },
+    {
+        "Name": "grstaps_task_allocation",
+        "Title": "GRSTAPS: Graphically Recursive Simultaneous Task Allocation, Planning, and Scheduling",
+        "Experiment": "Implement the GRSTAPS framework, which interleaves task planning, task allocation, scheduling, and motion planning to address Simultaneous Task Allocation and Planning with Spatiotemporal Constraints (STAP-STC) problems. The experiment would involve setting up a heterogeneous multi-robot team in simulated disaster-response environments, evaluating the framework's performance in terms of computation time, solution quality, and scalability compared to traditional sequential approaches.",
+        "Interestingness": 8,
+        "Feasibility": 6,
+        "Novelty": 8,
+        "novel": false
+    },
+    {
+        "Name": "adaptive_llm_task_planner",
+        "Title": "Adaptive LLM-based Task Planner with Execution Feedback for Robotic Applications",
+        "Experiment": "1. Generate a synthetic dataset of high-level household tasks (e.g., cleaning, cooking, organizing) and corresponding detailed plans using the GPT model. 2. Fine-tune the model on this dataset. 3. Implement a task planning function that takes a high-level task description and outputs a detailed plan. 4. Create a simulated environment to 'execute' these plans and provide success/failure feedback. 5. Develop a mechanism to incorporate this feedback into the model's training process. 6. Evaluate the system's performance over multiple iterations, measuring plan quality, task completion rate, and adaptation to feedback. 7. Compare the adaptive system against a non-adaptive baseline.",
+        "Interestingness": 9,
+        "Feasibility": 8,
+        "Novelty": 8,
+        "novel": true
+    },
+    {
+        "Name": "llm_adaptive_task_scheduling",
+        "Title": "Adaptive LLM-based Task Scheduling for Household Robots",
+        "Experiment": "1. Modify the GPT model to output task descriptions, estimated durations, and simple temporal constraints. 2. Implement a basic greedy scheduling algorithm to create task schedules. 3. Generate a small set of common household scenarios using the GPT model. 4. Train the modified GPT model on this dataset. 5. Evaluate the system by comparing schedules generated by the LLM-only approach vs. the LLM + Greedy Scheduling approach. 6. Implement a simple feedback mechanism where successful schedules reinforce the model's duration estimates. 7. Measure metrics such as total schedule duration, task completion rate, and comparison to human-generated schedules for the same scenarios.",
+        "Interestingness": 9,
+        "Feasibility": 8,
+        "Novelty": 9,
+        "novel": true
+    }
+]

@@ -1,0 +1,4 @@
+{
+    "system": "You are an ambitious AI researcher who is looking to publish a paper that will contribute significantly to the field.",
+    "task_description": "You are given the following file to work with, The objective is to examine the concept of a scheduling model for a household robot. The fundamental question is whether the estimated duration of robot tasks will result in the generation of a schedule with a shorter time than that produced by the use of LLM alone. The task to be performed and the precondition task are determined by LLM, while the duration and timing constraints (e.g., Task A must start 5 minutes after the end of Task B or can start 5 minutes after) of each task are determined by the Bayesian Time Estimation module. Scheduling considers the duration of each task and the temporal constraints between tasks. A tree struct is employed by the scheduling module to create a feasible task path that satisfies the aforementioned constraints."
+}

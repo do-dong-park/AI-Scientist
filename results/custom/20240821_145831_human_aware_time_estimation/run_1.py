@@ -13,6 +13,23 @@ import torch
 import torch.nn as nn
 from torch.nn import functional as F
 
+# Robot Execution Time Estimation
+class RobotTimeEstimator(nn.Module):
+    def __init__(self, input_size, hidden_size, output_size):
+        super(RobotTimeEstimator, self).__init__()
+        self.fc1 = nn.Linear(input_size, hidden_size)
+        self.fc2 = nn.Linear(hidden_size, output_size)
+        
+    def forward(self, x):
+        x = F.relu(self.fc1(x))
+        x = self.fc2(x)
+        return x
+
+def estimate_execution_time(task_features):
+    # Placeholder function for estimating robot execution time
+    # In a real scenario, this would use the RobotTimeEstimator model
+    return torch.rand(1) * 10  # Random time between 0 and 10 seconds
+
 
 # --- BEGIN model.py ---
 class LayerNorm(nn.Module):
@@ -314,7 +331,7 @@ class GPT(nn.Module):
 
 
 # --- END model.py ---
-def train(dataset="shakespeare_char", out_dir="run_0", seed_offset=0):
+def train(dataset="shakespeare_char", out_dir="run_0", seed_offset=0, use_time_estimation=True):
     # -----------------------------------------------------------------------------
     # default config values designed to train a gpt2 (124M) on OpenWebText
     # data
@@ -514,7 +531,17 @@ def train(dataset="shakespeare_char", out_dir="run_0", seed_offset=0):
     t0 = time.time()
     local_iter_num = 0  # number of iterations in the lifetime of this process
     raw_model = model
+    
+    # Initialize time estimation metrics
+    total_estimated_time = 0
+    total_actual_time = 0
+    
     while True:
+        if use_time_estimation:
+            # Simulate task features (in reality, these would come from the actual task)
+            task_features = torch.rand(10)  # 10 random features
+            estimated_time = estimate_execution_time(task_features)
+            task_start_time = time.time()
 
         # determine and set the learning rate for this iteration
         lr = get_lr(iter_num) if decay_lr else learning_rate
@@ -581,13 +608,31 @@ def train(dataset="shakespeare_char", out_dir="run_0", seed_offset=0):
             # scale up to undo the division above, approximating the true total loss (exact would have been a sum)
             lossf = loss.item() * gradient_accumulation_steps
             print(f"iter {iter_num}: loss {lossf:.4f}, time {dt*1000:.2f}ms")
-            train_log_info.append(
-                {
-                    "iter": iter_num,
-                    "loss": lossf,
-                    "time": dt * 1000,
-                }
-            )
+            
+            if use_time_estimation:
+                actual_time = time.time() - task_start_time
+                total_estimated_time += estimated_time.item()
+                total_actual_time += actual_time
+                estimation_error = abs(estimated_time.item() - actual_time)
+                
+                train_log_info.append(
+                    {
+                        "iter": iter_num,
+                        "loss": lossf,
+                        "time": dt * 1000,
+                        "estimated_time": estimated_time.item(),
+                        "actual_time": actual_time,
+                        "estimation_error": estimation_error,
+                    }
+                )
+            else:
+                train_log_info.append(
+                    {
+                        "iter": iter_num,
+                        "loss": lossf,
+                        "time": dt * 1000,
+                    }
+                )
         iter_num += 1
         local_iter_num += 1
 
@@ -604,6 +649,13 @@ def train(dataset="shakespeare_char", out_dir="run_0", seed_offset=0):
         "best_val_loss": best_val_loss.item(),
         "total_train_time": time.time() - og_t0,
     }
+    
+    if use_time_estimation:
+        final_info.update({
+            "total_estimated_time": total_estimated_time,
+            "total_actual_time": total_actual_time,
+            "avg_estimation_error": (total_estimated_time - total_actual_time) / iter_num,
+        })
 
     # === SAMPLING SCRIPT ===
 
@@ -695,7 +747,7 @@ if __name__ == "__main__":
     for dataset in ["shakespeare_char", "enwik8", "text8"]:
         final_info_list = []
         for seed_offset in range(num_seeds[dataset]):
-            final_info, train_info, val_info = train(dataset, out_dir, seed_offset)
+            final_info, train_info, val_info = train(dataset, out_dir, seed_offset, use_time_estimation=True)
             all_results[f"{dataset}_{seed_offset}_final_info"] = final_info
             all_results[f"{dataset}_{seed_offset}_train_info"] = train_info
             all_results[f"{dataset}_{seed_offset}_val_info"] = val_info

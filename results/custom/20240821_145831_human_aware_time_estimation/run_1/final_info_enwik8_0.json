@@ -1,0 +1,1 @@
+{"final_train_loss": 1.0290508270263672, "best_val_loss": 1.0044450759887695, "total_train_time": 4345.109571933746, "total_estimated_time": 4985.216178417206, "total_actual_time": 683.8938393592834, "avg_estimation_error": 0.0430127932626466, "avg_inference_tokens_per_second": 1070.7996827820411}
